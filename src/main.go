@@ -1,7 +1,21 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/atarte/cli-cd/data"
+	"github.com/atarte/cli-cd/display"
+)
+
+var (
+	AppName string = "cli-cd"
+	Version string = "0.0.0"
+	// Build   string = "abcd"
+)
 
 func main() {
-	fmt.Println("cli-cd")
+	display.Title()
+
+	err := data.CreateCliCdDir()
+	fmt.Println("err", err)
 }
