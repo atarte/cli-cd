@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/atarte/cli-cd/data"
+	"github.com/atarte/cli-cd/config"
 	"github.com/atarte/cli-cd/display"
 )
 
@@ -16,6 +16,7 @@ var (
 func main() {
 	display.Title()
 
-	err := data.CreateCliCdDir()
+	err := config.CreateCliCdConfigFile()
 	fmt.Println("err", err)
+
 }
