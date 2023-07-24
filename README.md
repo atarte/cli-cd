@@ -46,6 +46,7 @@ go build -ldflags "-X github.com/atarte/cli-cd/config.ReleaseYear=2023" ./src/ma
 Or all in one commande.
 
 ```bash
+# run
 go run -ldflags "-X 'github.com/atarte/cli-cd/config.Version=1.0.0' -X 'github.com/atarte/cli-cd/config.ReleaseYear=2023'" ./src/main.go
 
 # build

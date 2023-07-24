@@ -23,7 +23,7 @@ func MenuScreen() {
 	case "1":
 		// ViewAppList(data)
 	case "2":
-		// AddApp(data)
+		addScreen()
 	case "3":
 		// UpdateApp()
 	case "4":

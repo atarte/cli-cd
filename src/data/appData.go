@@ -1,15 +1,15 @@
 package data
 
-// type AppData struct {
-// 	MonitoredAppList []MonitoredApp `json:"app_list"`
-// }
+type AppData struct {
+	MonitoredAppList []MonitoredApp `json:"app_list"`
+}
 
-// // AddMonitoredApp
-// func (a *AppData) AddMonitoredApp(m MonitoredApp) {
-// 	a.MonitoredAppList = append(a.MonitoredAppList, m)
+// AddMonitoredApp
+func (a *AppData) AddMonitoredApp(m MonitoredApp) {
+	a.MonitoredAppList = append(a.MonitoredAppList, m)
 
-// 	// saveAppData(a)
-// }
+	// saveAppData(a)
+}
 
 // DeleteMonitoredApp
 // func (a *AppData) DeleteMonitoredApp(m MonitoredApp) {
@@ -62,9 +62,14 @@ package data
 // }
 
 // // saveAppData is use to save an AppData struct into a json file
-// func saveAppData(appdata *AppData) {
+// func saveAppData(appdata *AppData) error {
 
 // 	file, _ := json.MarshalIndent(appdata, "", "    ")
 
-// 	_ = ioutil.WriteFile(appdataPath, file, 0644)
+// 	err := ioutil.WriteFile(config.CLI_CD_CONFIG_FILE, file, 0644)
+// 	if err != nil {
+// 		return fmt.Errorf("Canno't save data: %s", err)
+// 	}
+
+// 	return nil
 // }
