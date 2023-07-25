@@ -1,75 +1,103 @@
 package data
 
+import (
+	"encoding/json"
+	"io/ioutil"
+	"log"
+	"os"
+
+	"github.com/atarte/cli-cd/config"
+)
+
 type AppData struct {
 	MonitoredAppList []MonitoredApp `json:"app_list"`
 }
 
 // AddMonitoredApp
-func (a *AppData) AddMonitoredApp(m MonitoredApp) {
+func (a *AppData) AddMonitoredApp(m MonitoredApp) AppData {
 	a.MonitoredAppList = append(a.MonitoredAppList, m)
 
-	// saveAppData(a)
+	a.UpdateCliCdConfigFile()
+
+	return *a
 }
 
 // DeleteMonitoredApp
-// func (a *AppData) DeleteMonitoredApp(m MonitoredApp) {
-// uuidToDelete := m.Uuid
+func (a *AppData) DeleteMonitoredApp() {
+	// uuidToDelete := m.Uuid
 
-// for i, monitoredApp := range a.MonitoredAppList {
-// 	if monitoredApp.Uuid == uuidToDelete {
-// 		a.MonitoredAppList[i] = a.MonitoredAppList[len(a.MonitoredAppList)-1]
-// 		a.MonitoredAppList[len(a.MonitoredAppList)-1] = MonitoredApp{}
-// 		a.MonitoredAppList = a.MonitoredAppList[:len(a.MonitoredAppList)-1]
+	// for i, monitoredApp := range a.MonitoredAppList {
+	// 	if monitoredApp.Uuid == uuidToDelete {
+	// 		a.MonitoredAppList[i] = a.MonitoredAppList[len(a.MonitoredAppList)-1]
+	// 		a.MonitoredAppList[len(a.MonitoredAppList)-1] = MonitoredApp{}
+	// 		a.MonitoredAppList = a.MonitoredAppList[:len(a.MonitoredAppList)-1]
 
-// 		break
-// 	}
-// }
+	// 		break
+	// 	}
+	// }
 
-// saveAppData(a)
-// }
+	a.UpdateCliCdConfigFile()
+}
 
 // UpdateMonitoredApp
-// func (a *AppData) UpdateMonitoredApp(m MonitoredApp) {
-// uuidToDelete := m.Uuid
+func (a *AppData) UpdateMonitoredApp() {
+	// uuidToDelete := m.Uuid
 
-// for i, monitoredApp := range a.MonitoredAppList {
-// 	if monitoredApp.Uuid == uuidToDelete {
-// 		a.MonitoredAppList[i] = m
+	// for i, monitoredApp := range a.MonitoredAppList {
+	// 	if monitoredApp.Uuid == uuidToDelete {
+	// 		a.MonitoredAppList[i] = m
 
-// 		break
-// 	}
-// }
+	// 		break
+	// 	}
+	// }
 
-// saveAppData(a)
-// }
+	// config.UpdateCliCdConfigFile(a)
+}
 
-// // LoadAppData is use to load a json file from a given path and return a AppData struct
-// func LoadAppData() AppData {
+// UpdateCliCdConfigFile
+func (a *AppData) UpdateCliCdConfigFile() {
+	if !config.IsCliCdConfigFileExist() {
+		log.Fatal("Config file should exist at this point. Cannot 'UpdateCliCdConfigFile'. Relauch the program.")
+	}
 
-// 	if _, err := os.Stat(appdataPath); err != nil {
-// 		newAppData := AppData{}
+	dataJson, err := json.MarshalIndent(a, "", "    ")
+	if err != nil {
+		log.Fatal(err)
+	}
 
-// 		saveAppData(&newAppData)
-// 	}
+	filePath, err := config.GetCliCdFilePath()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-// 	byteFile, _ := ioutil.ReadFile(appdataPath)
+	if err := os.WriteFile(filePath, dataJson, 0644); err != nil {
+		log.Fatal(err)
+	}
+}
 
-// 	var appdata AppData
+// LoadCkiCdConfigFile
+func LoadCliCdConfigFile() AppData {
+	if !config.IsCliCdConfigFileExist() {
+		config.CreateCliCdConfigFile()
 
-// 	json.Unmarshal(byteFile, &appdata)
+		return AppData{}
+		// log.Fatal("Config file should exist at this point. Cannot 'LoadCliCdConfigFile'. Relauch the program.")
+	}
 
-// 	return appdata
-// }
+	filePath, err := config.GetCliCdFilePath()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-// // saveAppData is use to save an AppData struct into a json file
-// func saveAppData(appdata *AppData) error {
+	byteFile, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-// 	file, _ := json.MarshalIndent(appdata, "", "    ")
+	var appdata AppData
+	if err := json.Unmarshal(byteFile, &appdata); err != nil {
+		log.Fatal(err)
+	}
 
-// 	err := ioutil.WriteFile(config.CLI_CD_CONFIG_FILE, file, 0644)
-// 	if err != nil {
-// 		return fmt.Errorf("Canno't save data: %s", err)
-// 	}
-
-// 	return nil
-// }
+	return appdata
+}

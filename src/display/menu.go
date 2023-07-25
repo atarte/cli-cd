@@ -3,10 +3,12 @@ package display
 import (
 	"fmt"
 	"os"
+
+	"github.com/atarte/cli-cd/data"
 )
 
 // MenuScreen
-func MenuScreen() {
+func MenuScreen(appdata *data.AppData) {
 	titleScreen()
 
 	fmt.Println("(1) - View app list")
@@ -21,9 +23,9 @@ func MenuScreen() {
 
 	switch input {
 	case "1":
-		// ViewAppList(data)
+		AppListScreen(appdata)
 	case "2":
-		addScreen()
+		addScreen(appdata)
 	case "3":
 		// UpdateApp()
 	case "4":
@@ -33,6 +35,7 @@ func MenuScreen() {
 	case "6":
 		os.Exit(0)
 	default:
-		fmt.Println("pas cool")
+		// no valid inout detected
+		return
 	}
 }

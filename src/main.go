@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/atarte/cli-cd/data"
 	"github.com/atarte/cli-cd/display"
 )
 
@@ -11,8 +12,10 @@ import (
 // )
 
 func main() {
+	var appdata data.AppData = data.LoadCliCdConfigFile()
+
 	for {
-		display.MenuScreen()
+		display.MenuScreen(&appdata)
 
 	}
 

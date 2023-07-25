@@ -1,7 +1,7 @@
 package data
 
 type MonitoredApp struct {
-	// Uuid             string `json:"uuid"`
+	Uuid string `json:"uuid"`
 	Name string `json:"name"`
 	Path string `json:"path"`
 	// AutomaticDeploy  bool   `json:"automatic_deploy"`
@@ -9,4 +9,8 @@ type MonitoredApp struct {
 	// DockerfilePath   string `json:"dockerfile_path"`
 	// Kubernetes       bool   `json:"Kubernetes"`
 	// Checksum         string `json:"checksum"`
+}
+
+func IsMonitoiredAppValid() {
+
 }
