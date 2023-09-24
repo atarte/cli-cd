@@ -5,7 +5,6 @@ import (
 	"strings"
 
 	"github.com/atarte/cli-cd/data"
-	"github.com/google/uuid"
 )
 
 // addScreen
@@ -56,10 +55,10 @@ func addScreen(appdata *data.AppData) {
 
 	// fmt.Println("Do you want to support Kubernetes (y/n) (for now no by default)")
 
-	var id string = uuid.NewString()
+	// var id string = uuid.NewString()
 
 	newMonitoredApp := data.MonitoredApp{
-		Uuid: id,
+		// Uuid: id,
 		Name: appName,
 		Path: appPath,
 		// AutomaticDeploy:  AutomaticDeployBool,
