@@ -50,7 +50,7 @@ func CreateCliCdConfigFile() {
 			log.Fatal(err)
 		}
 
-		if err := os.WriteFile(filePath, []byte{}, 0644); err != nil {
+		if err := os.WriteFile(filePath, []byte("{}"), 0644); err != nil {
 			log.Fatal(err)
 		}
 	}

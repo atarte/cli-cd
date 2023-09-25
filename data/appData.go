@@ -2,7 +2,6 @@ package data
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"log"
 	"os"
 
@@ -89,7 +88,7 @@ func LoadCliCdConfigFile() AppData {
 		log.Fatal(err)
 	}
 
-	byteFile, err := ioutil.ReadFile(filePath)
+	byteFile, err := os.ReadFile(filePath)
 	if err != nil {
 		log.Fatal(err)
 	}
